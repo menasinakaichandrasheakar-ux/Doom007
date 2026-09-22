@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', 'Newsreader', Georgia, serif;
+  --font-display: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
+  --font-headline: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+  
+  --color-brand-bg: #f8f7f4;
+  --color-brand-ink: #1a1a1a;
+  --color-brand-accent: #5e17eb;
+  --color-brand-line: rgba(26, 26, 26, 0.08);
+  --color-brand-muted: rgba(26, 26, 26, 0.6);
+}
+
+:root {
+  --bg: #f8f7f4;
+  --ink: #1a1a1a;
+  --accent: #5e17eb;
+  --ink-muted: rgba(26, 26, 26, 0.6);
+  --line: rgba(26, 26, 26, 0.08);
+  --line-strong: rgba(26, 26, 26, 0.2);
+  --alert-bg: #fff1f2;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Variation 3 Editorial & Display Typography */
+.font-serif, .font-display, .font-headline {
+  font-family: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', 'Newsreader', Georgia, serif;
+  font-feature-settings: "liga" 1, "kern" 1, "dlig" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-cormorant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-fraunces {
+  font-family: 'Fraunces', 'DM Serif Display', serif;
+}
+
+.font-mono, .font-space {
+  font-family: 'Space Mono', monospace;
+}
+
+.font-sans, .font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Distinctive Headline & Title Texture Utility */
+.headline-texture {
+  font-family: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
+  font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
+  letter-spacing: -0.025em;
+  text-rendering: optimizeLegibility;
+}
+
+/* Contextual Title & Recommendation Headline Texture */
+.recommendation-title {
+  font-family: 'Fraunces', 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
+  font-feature-settings: "liga" 1, "kern" 1;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Custom Editorial / Variation 3 Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f7f4;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 26, 26, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1a1a1a;
+}
+

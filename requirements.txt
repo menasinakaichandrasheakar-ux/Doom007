@@ -1,0 +1,8 @@
+# Python Requirements for AI-Enabled Smart Campus Monitoring System
+# Tested on Python 3.10+
+
+pandas>=1.5.0
+numpy>=1.23.0
+nltk>=3.8.0
+
+# Note: Tkinter is standard library in Python. On Debian/Ubuntu install `python3-tk`.

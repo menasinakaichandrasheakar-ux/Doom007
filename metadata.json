@@ -1,0 +1,8 @@
+{
+  "name": "Remix AI-Enabled Smart Campus Monitoring System",
+  "description": "Modular Python desktop and web system for academic risk assessment, NLP feedback sentiment classification, attendance monitoring, and automated interventions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

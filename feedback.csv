@@ -1,0 +1,7 @@
+FeedbackID,StudentID,Timestamp,FeedbackText,Sentiment,Category,ExtractedKeywords
+FB301,S101,2026-09-01 10:15,Excellent lecture delivery and fantastic coding lab sessions.,Positive,Academic,"excellent, fantastic, coding"
+FB302,S102,2026-09-01 11:30,Projector in classroom 302 is flickering and needs maintenance.,Neutral,Campus/Infrastructure,"projector, classroom, maintenance"
+FB303,S103,2026-09-02 14:00,Thermodynamics lab apparatus is broken and professor is harsh and unfair.,Negative,Academic,"broken, harsh, unfair"
+FB304,S103,2026-09-02 16:45,Hostel wifi is terribly slow and disconnects during assignment submissions.,Negative,Campus/Infrastructure,"terrible, slow, wifi"
+FB305,S104,2026-09-03 09:20,Course syllabus is heavy but teaching faculty is helpful.,Positive,Academic,"helpful, syllabus, course"
+FB306,S105,2026-09-03 15:10,Structural analysis grading was strict and lack of mentor guidance made me fail.,Negative,Academic,"fail, strict, guidance"

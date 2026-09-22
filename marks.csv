@@ -1,0 +1,11 @@
+RecordID,StudentID,Subject,InternalMarks,ExamMarks,TotalMarks
+MRK201,S101,Data Structures,44.00,45.00,89.00
+MRK202,S101,Operating Systems,42.00,43.00,85.00
+MRK203,S102,Database Systems,36.00,38.00,74.00
+MRK204,S102,Web Technologies,34.00,36.00,70.00
+MRK205,S103,Thermodynamics,14.00,18.00,32.00
+MRK206,S103,Engineering Mathematics,15.00,21.00,36.00
+MRK207,S104,Digital Electronics,24.00,29.00,53.00
+MRK208,S104,Signals & Systems,25.00,27.00,52.00
+MRK209,S105,Structural Analysis,16.00,22.00,38.00
+MRK210,S105,Geotechnical Engg,28.00,31.00,59.00

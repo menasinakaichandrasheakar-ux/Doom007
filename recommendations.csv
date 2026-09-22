@@ -1,0 +1,10 @@
+RecID,StudentID,RiskLevel,RecommendedAction,Status
+REC101,S101,Low Risk,Eligible for Honors Research Program & Peer Mentorship Leadership,Pending
+REC102,S102,Low Risk,Trigger Attendance Counseling & Guardian Notification (Attendance < 75%),Pending
+REC103,S103,High Risk,Trigger Attendance Counseling & Guardian Notification (Attendance < 75%),Pending
+REC104,S103,High Risk,Assign Subject-Specific Faculty Mentor for Remedial Support,Pending
+REC105,S103,High Risk,Escalate Grievance to Campus Infrastructure/Student Welfare Cell,Pending
+REC106,S104,Low Risk,Eligible for Honors Research Program & Peer Mentorship Leadership,Pending
+REC107,S105,High Risk,Trigger Attendance Counseling & Guardian Notification (Attendance < 75%),Pending
+REC108,S105,High Risk,Assign Subject-Specific Faculty Mentor for Remedial Support,Pending
+REC109,S105,High Risk,Escalate Grievance to Campus Infrastructure/Student Welfare Cell,Pending
