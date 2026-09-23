@@ -198,9 +198,6 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
       {/* Hero Header Block */}
       <div className="border-b border-[#1a1a1a]/10 px-6 sm:px-12 py-10 sm:py-14 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
         <div className="flex flex-col items-center text-center max-w-3xl">
-          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#5e17eb] mb-3 font-bold text-center">
-            Academic Risk &amp; Sentiment Intelligence
-          </div>
           <h2 className="font-serif font-display headline-texture text-4xl sm:text-6xl lg:text-7xl font-bold leading-[0.92] text-[#1a1a1a] text-center">
             All In One<br />Present Sir.
           </h2>

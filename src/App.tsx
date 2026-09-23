@@ -483,7 +483,7 @@ export default function App() {
     <div className={`min-h-screen bg-[#f8f7f4] text-[#1a1a1a] flex flex-col font-sans transition-all duration-300 w-full overflow-x-hidden ${sideTaskbarOpen ? "md:pl-64" : "md:pl-20"}`}>
       {/* Top Banner Header (Variation 3 Editorial Header) */}
       <header className="bg-[#f8f7f4]/95 text-[#1a1a1a] border-b-[1.5px] border-[#1a1a1a] sticky top-0 z-30 backdrop-blur-md px-4 sm:px-8 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 min-w-[100px] sm:min-w-[160px]">
           {/* Mobile Navigation Drawer Trigger */}
           <button
             onClick={() => setMobileDrawerOpen(true)}
@@ -496,29 +496,22 @@ export default function App() {
         </div>
 
         {/* Editorial Brand (Centered) */}
-        <button
-          onClick={() => setActiveTab(0)}
-          className="text-center cursor-pointer group flex flex-col items-center justify-center mx-auto"
-          title="Present Sir — Return to Overview"
-        >
-          <div className="font-serif font-display headline-texture text-xl sm:text-2xl font-bold tracking-tight text-[#1a1a1a] group-hover:text-[#5e17eb] transition leading-none text-center">
-            Academic Student Campus
-          </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#1a1a1a]/50 mt-0.5 text-center">
-            Present Sir OS &bull; Academic Intelligence
-          </div>
-        </button>
+        <div className="flex-1 flex justify-center text-center">
+          <button
+            onClick={() => setActiveTab(0)}
+            className="text-center cursor-pointer group flex flex-col items-center justify-center"
+            title="Present Sir — Return to Overview"
+          >
+            <div className="font-serif font-display headline-texture text-xl sm:text-2xl font-bold tracking-tight text-[#1a1a1a] group-hover:text-[#5e17eb] transition leading-none text-center">
+              Academic Student Campus
+            </div>
+          </button>
+        </div>
 
         {/* Space Mono Meta Navigation */}
-        <div className="flex items-center gap-4 sm:gap-6 font-mono text-xs uppercase tracking-widest text-[#1a1a1a]/70">
-          <span className="hidden sm:inline hover:text-[#5e17eb] transition cursor-pointer" onClick={() => setActiveTab(1)}>Library</span>
+        <div className="flex items-center justify-end gap-4 font-mono text-xs uppercase tracking-widest text-[#1a1a1a]/70 min-w-[100px] sm:min-w-[160px]">
           <span className={`cursor-pointer transition ${activeTab === 0 ? "text-[#5e17eb] font-bold underline" : "hover:text-[#5e17eb]"}`} onClick={() => setActiveTab(0)}>Dashboard</span>
           <span className={`cursor-pointer transition ${activeTab === 9 ? "text-[#5e17eb] font-bold underline" : "hover:text-[#5e17eb]"}`} onClick={() => setActiveTab(9)}>AI Chat</span>
-          <span className="hidden sm:inline hover:text-[#5e17eb] transition cursor-pointer" onClick={() => setActiveTab(4)}>Support</span>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-[#1a1a1a]/20 rounded-full text-[10px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-            <span className="font-bold text-[#1a1a1a]">Sync — 100%</span>
-          </div>
         </div>
       </header>
 
@@ -529,29 +522,19 @@ export default function App() {
           <div className="w-full flex flex-col">
             {/* Editorial Hero Section Centered */}
             <div className="border-b-[1.5px] border-[#1a1a1a] pb-6 mb-8 text-center flex flex-col items-center justify-center">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#5e17eb] font-bold block mb-1.5 text-center">
-                Academic Risk &amp; Student Intelligence
-              </span>
               <h2 className="font-serif font-display headline-texture text-4xl sm:text-6xl lg:text-7xl font-bold leading-[0.92] text-[#1a1a1a] tracking-tight text-center">
                 All In One<br />Present Sir.
               </h2>
               <p className="mt-3 text-sm sm:text-base text-[#1a1a1a]/70 max-w-xl font-sans leading-relaxed text-center mx-auto">
                 Modular Python system for academic risk assessment, sentiment classification, and automated interventions.
               </p>
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-4 font-mono text-xs text-[#1a1a1a]/70">
-                <div className="text-[#1a1a1a] font-bold">Logged in as: {currentProfile?.name || "Sharma, P."}</div>
-                <div className="text-[11px] text-[#5e17eb]">&bull; {currentProfile?.role || "Campus Admin"} &bull; Access {currentProfile?.id || "01"}</div>
-              </div>
             </div>
 
             {/* Split Editorial Container */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Left Column: Active Modules List */}
               <div className="lg:col-span-8">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[11px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold">
-                    Active Modules &bull; Unit 1 to 8
-                  </span>
+                <div className="flex items-center justify-end mb-3">
                   <div className="flex items-center gap-1 font-mono text-[10px]">
                     <button
                       onClick={() => setHubFilter("all")}
@@ -722,9 +705,6 @@ export default function App() {
                   </div>
 
                   <div className="mt-6">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-3">
-                      Active Commands
-                    </span>
                     <button
                       onClick={handleDownloadPdf}
                       className="w-full py-3.5 bg-[#5e17eb] hover:bg-[#4d10c7] text-white font-mono text-xs font-bold uppercase transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
@@ -746,17 +726,6 @@ export default function App() {
                     >
                       View All Reports &amp; CSVs
                     </button>
-                  </div>
-
-                  <div className="mt-8 pt-6 border-t border-[#1a1a1a]/15">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-2">
-                      System Integrity
-                    </span>
-                    <p className="font-mono text-xs text-[#1a1a1a]/70 leading-relaxed">
-                      AI Engine: Rule-Based Lexicon<br />
-                      Status: Monitoring Live Stream<br />
-                      Storage: 8 CSV Data Tables
-                    </p>
                   </div>
                 </div>
               </div>
