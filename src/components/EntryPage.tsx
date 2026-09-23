@@ -178,7 +178,7 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
 
         <div className="flex-1 flex justify-center text-center">
           <div className="font-serif font-display headline-texture text-2xl sm:text-3xl font-bold tracking-tight text-[#1a1a1a] text-center">
-            Campus Interface
+            Academic Student Campus
           </div>
         </div>
 
@@ -241,10 +241,6 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
         {/* Panel 1: Enter Details Form */}
         {activeMode === "enter-details" && (
           <div className="w-full max-w-2xl bg-white border-[1.5px] border-[#1a1a1a] p-6 sm:p-10 shadow-[6px_6px_0px_rgba(26,26,26,0.15)] relative">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-[#1a1a1a]/50 block mb-4 border-b border-[#1a1a1a]/10 pb-2">
-              Authentication Form • Module 01
-            </span>
-
             {errorMessage && (
               <div className="mb-6 p-3 bg-[#fff1f2] border border-rose-300 text-rose-800 text-xs flex items-center gap-2 font-mono">
                 <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
@@ -394,7 +390,7 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
                 {/* Email Address */}
                 <div className="sm:col-span-2">
                   <label className="block font-mono text-[11px] uppercase tracking-wider text-[#1a1a1a] font-bold mb-1">
-                    Email Address <span className="text-[#1a1a1a]/50 text-[10px] font-normal">(Campus Network)</span>
+                    Email Address
                   </label>
                   <input
                     type="email"
@@ -542,15 +538,6 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
           </div>
         )}
       </main>
-
-      {/* Editorial Footer */}
-      <footer className="border-t-[1.5px] border-[#1a1a1a] bg-[#f8f7f4] px-6 sm:px-12 py-4 flex flex-col sm:flex-row items-center justify-between font-mono text-[10px] text-[#1a1a1a]/60 gap-2">
-        <div>© 2024 Present Sir OS • Academic Monitoring Core</div>
-        <div className="flex gap-4">
-          <span>STU_SYS_VER_4.0</span>
-          <span>CAMPUS_NETWORK_LIVE</span>
-        </div>
-      </footer>
     </div>
   );
 }

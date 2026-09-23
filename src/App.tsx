@@ -502,7 +502,7 @@ export default function App() {
           title="Present Sir — Return to Overview"
         >
           <div className="font-serif font-display headline-texture text-xl sm:text-2xl font-bold tracking-tight text-[#1a1a1a] group-hover:text-[#5e17eb] transition leading-none text-center">
-            Campus Interface
+            Academic Student Campus
           </div>
           <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#1a1a1a]/50 mt-0.5 text-center">
             Present Sir OS &bull; Academic Intelligence
