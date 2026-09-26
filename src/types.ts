@@ -66,4 +66,7 @@ export interface VisitorProfile {
   semester?: string;
   designation?: string;
   email?: string;
+  facultyId?: string;
+  courseName?: string;
+  courseDescription?: string;
 }

@@ -1,6 +1,6 @@
 StudentID,Name,Department,Semester,Email
-S101,Aarav Sharma,Information Technology,4,aarav.sharma@campus.edu
-S102,Priya Patel,Information Technology,6,priya.patel@campus.edu
-S103,Rohan Verma,Mechanical Engineering,4,rohan.verma@campus.edu
-S104,Ananya Iyer,Electronics & Comm,2,ananya.iyer@campus.edu
-S105,Vikram Singh,Civil Engineering,8,vikram.singh@campus.edu
+S101,Aarav Sharma,BCA-AI&DA,4,aarav.sharma@campus.edu
+S102,Priya Patel,BCA-CY,6,priya.patel@campus.edu
+S103,Rohan Verma,BCOM,4,rohan.verma@campus.edu
+S104,Ananya Iyer,BBA,2,ananya.iyer@campus.edu
+S105,Vikram Singh,BSC,6,vikram.singh@campus.edu

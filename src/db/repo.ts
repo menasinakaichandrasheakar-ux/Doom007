@@ -37,7 +37,7 @@ export async function seedInitialDataIfEmpty() {
           await db.insert(students).values({
             studentId: s.StudentID,
             name: s.Name,
-            department: s.Department || 'Computer Science',
+            department: s.Department || 'BCA-AI&DA',
             semester: s.Semester || '1',
             email: s.Email || `${s.StudentID.toLowerCase()}@campus.edu`
           }).onConflictDoNothing();

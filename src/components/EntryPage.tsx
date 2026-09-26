@@ -6,7 +6,8 @@ import {
   ArrowRight,
   AlertCircle,
   UserCheck,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from "lucide-react";
 import { Student, VisitorProfile } from "../types";
 
@@ -36,12 +37,15 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
   const [formData, setFormData] = useState({
     name: "",
     customId: "",
-    department: "Computer Science & Engineering",
+    department: "BCA-AI&DA",
     semester: "4",
-    designation: "External Evaluator / Professor",
+    designation: "Assistant Professor / Faculty Member",
     email: "",
     totalClasses: "100",
-    classesAttended: "85"
+    classesAttended: "85",
+    facultyId: "FAC-101",
+    courseName: "Artificial Intelligence & Data Analytics (BCA-AI&DA)",
+    courseDescription: "Advanced curriculum covering core predictive modeling, data architecture, machine learning foundations, and academic performance evaluation."
   });
 
   const [saving, setSaving] = useState<boolean>(false);
@@ -126,7 +130,10 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
         department: formData.department,
         semester: role === "Student" ? formData.semester : undefined,
         designation: role !== "Student" ? formData.designation : undefined,
-        email: email
+        email: email,
+        facultyId: role === "Faculty" ? (formData.facultyId.trim() || finalId) : undefined,
+        courseName: role === "Faculty" ? (formData.courseName.trim() || undefined) : undefined,
+        courseDescription: role === "Faculty" ? (formData.courseDescription.trim() || undefined) : undefined
       };
 
       if (onRefreshData) onRefreshData();
@@ -156,10 +163,13 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
     const profile: VisitorProfile = {
       id: "ADMIN-01",
       name: "Prof. Sharma (Campus Admin)",
-      role: "Admin",
-      department: "Administration & Evaluation",
-      designation: "Academic Dean / Project Evaluator",
-      email: "admin.evaluator@campus.edu"
+      role: "Faculty",
+      department: "BCA-AI&DA",
+      designation: "Academic Dean / Senior Faculty Evaluator",
+      email: "admin.evaluator@campus.edu",
+      facultyId: "FAC-101",
+      courseName: "BCA-AI&DA (Artificial Intelligence & Data Analytics)",
+      courseDescription: "Comprehensive 4th Semester syllabus covering Machine Learning Foundations, Neural Networks, Predictive Analytics, and Risk Analysis Models."
     };
     onEnter(profile);
   };
@@ -342,12 +352,11 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
                     onChange={e => setFormData({ ...formData, department: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-white border-[1.5px] border-[#1a1a1a] focus:border-[#5e17eb] text-[#1a1a1a] text-xs font-sans transition-all outline-none cursor-pointer"
                   >
-                    <option value="Computer Science & Engineering">Computer Science &amp; Engineering</option>
-                    <option value="Information Technology">Information Technology</option>
-                    <option value="Artificial Intelligence & Data Science">Artificial Intelligence &amp; Data Science</option>
-                    <option value="Electronics & Communication">Electronics &amp; Communication</option>
-                    <option value="Mechanical Engineering">Mechanical Engineering</option>
-                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="BCA-AI&DA">BCA-AI&DA</option>
+                    <option value="BCA-CY">BCA-CY</option>
+                    <option value="BCOM">BCOM</option>
+                    <option value="BBA">BBA</option>
+                    <option value="BSC">BSC</option>
                   </select>
                 </div>
 
@@ -397,6 +406,60 @@ export default function EntryPage({ students, onEnter, onRefreshData }: EntryPag
                     className="w-full px-3.5 py-2.5 bg-white border-[1.5px] border-[#1a1a1a] focus:border-[#5e17eb] text-[#1a1a1a] text-xs font-sans transition-all outline-none"
                   />
                 </div>
+
+                {/* Faculty Enrolled Course & Details (Faculty role) */}
+                {role === "Faculty" && (
+                  <div className="sm:col-span-2 p-4 bg-[#f8f7f4] border-[1.5px] border-[#1a1a1a] space-y-3.5">
+                    <div className="flex items-center gap-2 border-b border-[#1a1a1a]/15 pb-2">
+                      <BookOpen className="w-4 h-4 text-[#5e17eb]" />
+                      <span className="font-mono text-xs uppercase tracking-wider font-bold text-[#1a1a1a]">
+                        Faculty Course Assignment &amp; Enrollment
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-mono text-[10px] uppercase text-[#1a1a1a]/70 font-bold mb-1">
+                          Faculty ID *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.facultyId}
+                          onChange={e => setFormData({ ...formData, facultyId: e.target.value, customId: e.target.value })}
+                          placeholder="e.g. FAC-101"
+                          className="w-full px-3 py-2 bg-white border-[1.5px] border-[#1a1a1a] text-xs font-mono font-bold text-[#5e17eb] outline-none focus:border-[#5e17eb]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-mono text-[10px] uppercase text-[#1a1a1a]/70 font-bold mb-1">
+                          Enrolled Course Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.courseName}
+                          onChange={e => setFormData({ ...formData, courseName: e.target.value })}
+                          placeholder="e.g. Machine Learning & Data Analytics"
+                          className="w-full px-3 py-2 bg-white border-[1.5px] border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb]"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-mono text-[10px] uppercase text-[#1a1a1a]/70 font-bold mb-1">
+                        Course Description *
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={formData.courseDescription}
+                        onChange={e => setFormData({ ...formData, courseDescription: e.target.value })}
+                        placeholder="Provide course overview, syllabus objectives, and enrolled curriculum..."
+                        className="w-full px-3 py-2 bg-white border-[1.5px] border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb] resize-none"
+                      />
+                    </div>
+                  </div>
+                )}
 
                 {/* Initial Attendance (Student role) */}
                 {role === "Student" && (

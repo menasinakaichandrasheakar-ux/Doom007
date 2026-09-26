@@ -34,7 +34,10 @@ import {
   Download,
   FileDown,
   Bot,
-  MessageSquareText
+  MessageSquareText,
+  BookOpen,
+  Check,
+  Save
 } from "lucide-react";
 import { Student, AttendanceRecord, MarksRecord, FeedbackRecord, RiskAnalysisRecord, RecommendationRecord, CampusDataState, VisitorProfile } from "./types";
 import { analyzeFeedbackClient } from "./nlpClient";
@@ -90,7 +93,7 @@ export default function App() {
   const [studentForm, setStudentForm] = useState({
     StudentID: "",
     Name: "",
-    Department: "Computer Science",
+    Department: "BCA-AI&DA",
     Semester: "4",
     Email: ""
   });
@@ -108,6 +111,59 @@ export default function App() {
       .filter(n => n > 0);
     const max = existingNums.length > 0 ? Math.max(...existingNums) : 100;
     return `S${max + 1}`;
+  };
+
+  // Faculty Overview Quick Edit & Additional Details State
+  const [facultyEditMode, setFacultyEditMode] = useState<boolean>(false);
+  const [facultyEditForm, setFacultyEditForm] = useState({
+    facultyId: "",
+    name: "",
+    department: "BCA-AI&DA",
+    courseName: "",
+    courseDescription: "",
+    designation: ""
+  });
+  const [facultySaveSuccess, setFacultySaveSuccess] = useState<boolean>(false);
+
+  // Sync faculty form when edit mode is toggled or currentProfile changes
+  const handleOpenFacultyEdit = () => {
+    if (currentProfile) {
+      setFacultyEditForm({
+        facultyId: currentProfile.facultyId || currentProfile.id || "FAC-101",
+        name: currentProfile.name || "",
+        department: currentProfile.department || "BCA-AI&DA",
+        courseName: currentProfile.courseName || "BCA-AI&DA",
+        courseDescription: currentProfile.courseDescription || "",
+        designation: currentProfile.designation || "Assistant Professor / Faculty Member"
+      });
+      setFacultyEditMode(true);
+    }
+  };
+
+  const handleSaveFacultyDetails = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!currentProfile) return;
+
+    const updatedProfile: VisitorProfile = {
+      ...currentProfile,
+      facultyId: facultyEditForm.facultyId.trim() || currentProfile.facultyId || currentProfile.id,
+      name: facultyEditForm.name.trim() || currentProfile.name,
+      department: facultyEditForm.department || currentProfile.department,
+      courseName: facultyEditForm.courseName.trim() || currentProfile.courseName || "BCA-AI&DA",
+      courseDescription: facultyEditForm.courseDescription.trim() || currentProfile.courseDescription || "",
+      designation: facultyEditForm.designation.trim() || currentProfile.designation
+    };
+
+    setCurrentProfile(updatedProfile);
+    try {
+      localStorage.setItem("campus_visitor_profile", JSON.stringify(updatedProfile));
+    } catch (saveErr) {
+      console.warn("Could not save to localStorage:", saveErr);
+    }
+
+    setFacultyEditMode(false);
+    setFacultySaveSuccess(true);
+    setTimeout(() => setFacultySaveSuccess(false), 3000);
   };
 
   // Tab 2 Form State
@@ -249,7 +305,7 @@ export default function App() {
         message: json.message || (isEditingStudent ? `Updated student ${sName} (${sId}).` : `Student ${sName} (${sId}) registered and enrolled successfully!`)
       });
 
-      setStudentForm({ StudentID: "", Name: "", Department: "Computer Science", Semester: "4", Email: "" });
+      setStudentForm({ StudentID: "", Name: "", Department: "BCA-AI&DA", Semester: "4", Email: "" });
       setIsEditingStudent(false);
       await fetchData();
     } catch (e: any) {
@@ -645,7 +701,7 @@ export default function App() {
                       code: "09",
                       group: "ai",
                       title: "AI Communicator & Chatbot",
-                      meta: "Multi-Turn Gemini Intelligence",
+                      meta: "Multi-Turn Conversational Intelligence",
                       desc: "Draft parent letters, counselor check-ins, remedial schedules & risk queries",
                       hasAlert: false,
                       actionLabel: "Chat AI",
@@ -691,6 +747,219 @@ export default function App() {
 
               {/* Right Column: Control Panel */}
               <div className="lg:col-span-4 flex flex-col gap-6">
+                {/* Faculty Enrolled Course & Details Option Card */}
+                {currentProfile?.role === "Faculty" && (
+                  <div className="border-[1.5px] border-[#1a1a1a] bg-white p-6 shadow-[4px_4px_0px_rgba(26,26,26,0.08)]">
+                    <div className="flex items-center justify-between mb-3 border-b border-[#1a1a1a]/15 pb-2">
+                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#5e17eb] font-bold flex items-center gap-1.5">
+                        <GraduationCap className="w-4 h-4 text-[#5e17eb]" />
+                        Faculty Profile &amp; Course
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {facultySaveSuccess && (
+                          <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 bg-emerald-600 text-white font-bold rounded-sm flex items-center gap-1">
+                            <Check className="w-3 h-3" /> Saved
+                          </span>
+                        )}
+                        <button
+                          onClick={() => {
+                            if (facultyEditMode) {
+                              setFacultyEditMode(false);
+                            } else {
+                              handleOpenFacultyEdit();
+                            }
+                          }}
+                          className={`font-mono text-[10px] uppercase font-bold px-2 py-0.5 border border-[#1a1a1a] transition cursor-pointer flex items-center gap-1 ${
+                            facultyEditMode
+                              ? "bg-[#1a1a1a] text-white"
+                              : "bg-white hover:bg-[#5e17eb] hover:text-white hover:border-[#5e17eb] text-[#1a1a1a]"
+                          }`}
+                          title={facultyEditMode ? "Cancel editing faculty details" : "Edit or add more details to faculty record"}
+                        >
+                          <Edit2 className="w-3 h-3" />
+                          <span>{facultyEditMode ? "Cancel" : "Edit / Add"}</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {!facultyEditMode ? (
+                      <div className="space-y-3">
+                        {/* Course Name */}
+                        <div className="border-[1.5px] border-[#1a1a1a] p-3.5 bg-[#f8f7f4]">
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/60 block font-bold">
+                              Course Enrolled
+                            </span>
+                            <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 bg-[#5e17eb] text-white font-bold rounded-sm">
+                              Active
+                            </span>
+                          </div>
+                          <div className="font-serif text-lg font-bold text-[#1a1a1a] mt-0.5 flex items-center gap-2">
+                            <BookOpen className="w-4 h-4 text-[#5e17eb] shrink-0" />
+                            <span className="truncate">{currentProfile.courseName || "BCA-AI&DA"}</span>
+                          </div>
+                          {currentProfile.department && (
+                            <div className="font-mono text-[10px] text-[#1a1a1a]/60 mt-1">
+                              Dept: <span className="font-bold text-[#1a1a1a]">{currentProfile.department}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Faculty ID & Instructor Name */}
+                        <div className="grid grid-cols-2 gap-2 font-mono">
+                          <div className="border border-[#1a1a1a]/20 p-2.5 bg-white">
+                            <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a]/60 block font-bold">
+                              Faculty ID
+                            </span>
+                            <span className="text-xs font-bold text-[#5e17eb] mt-0.5 block truncate">
+                              {currentProfile.facultyId || currentProfile.id || "FAC-101"}
+                            </span>
+                          </div>
+                          <div className="border border-[#1a1a1a]/20 p-2.5 bg-white">
+                            <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a]/60 block font-bold">
+                              Faculty Name
+                            </span>
+                            <span className="text-xs font-bold text-[#1a1a1a] mt-0.5 block truncate">
+                              {currentProfile.name}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Course Description */}
+                        <div className="border border-[#1a1a1a]/20 p-3 bg-white">
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/60 block font-bold mb-1">
+                            Course Description
+                          </span>
+                          <p className="font-sans text-xs text-[#1a1a1a]/80 leading-relaxed italic">
+                            "{currentProfile.courseDescription || "Specialized undergraduate program focusing on Artificial Intelligence, Data Analytics, and predictive intelligence architectures."}"
+                          </p>
+                        </div>
+
+                        {/* Designation / Extra Info */}
+                        <div className="border border-[#1a1a1a]/20 p-2.5 bg-[#f8f7f4] font-mono text-[10px] space-y-1">
+                          <div className="flex items-center justify-between text-[#1a1a1a]/70">
+                            <span>Designation:</span>
+                            <span className="font-bold text-[#1a1a1a] truncate ml-1">{currentProfile.designation || "Faculty Member"}</span>
+                          </div>
+                          {currentProfile.email && (
+                            <div className="flex items-center justify-between text-[#1a1a1a]/70">
+                              <span>Official Email:</span>
+                              <span className="font-bold text-[#5e17eb] truncate ml-1">{currentProfile.email}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      /* Inline Add / Insert / Edit Form */
+                      <form onSubmit={handleSaveFacultyDetails} className="space-y-3 font-sans">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                              Faculty ID *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={facultyEditForm.facultyId}
+                              onChange={e => setFacultyEditForm({ ...facultyEditForm, facultyId: e.target.value })}
+                              placeholder="FAC-101"
+                              className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-mono font-bold text-[#5e17eb] outline-none focus:border-[#5e17eb]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                              Faculty Name *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={facultyEditForm.name}
+                              onChange={e => setFacultyEditForm({ ...facultyEditForm, name: e.target.value })}
+                              placeholder="Prof. Name"
+                              className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb]"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                            Department / Course Code
+                          </label>
+                          <select
+                            value={facultyEditForm.department}
+                            onChange={e => setFacultyEditForm({ ...facultyEditForm, department: e.target.value })}
+                            className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-mono text-[#1a1a1a] outline-none focus:border-[#5e17eb] cursor-pointer"
+                          >
+                            <option value="BCA-AI&DA">BCA-AI&DA</option>
+                            <option value="BCA-CY">BCA-CY</option>
+                            <option value="BCOM">BCOM</option>
+                            <option value="BBA">BBA</option>
+                            <option value="BSC">BSC</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                            Enrolled Course Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={facultyEditForm.courseName}
+                            onChange={e => setFacultyEditForm({ ...facultyEditForm, courseName: e.target.value })}
+                            placeholder="e.g. Artificial Intelligence & Data Analytics"
+                            className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                            Course Description *
+                          </label>
+                          <textarea
+                            rows={3}
+                            required
+                            value={facultyEditForm.courseDescription}
+                            onChange={e => setFacultyEditForm({ ...facultyEditForm, courseDescription: e.target.value })}
+                            placeholder="Enter detailed course syllabus, goals, and enrolled description..."
+                            className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb] resize-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-mono text-[9px] uppercase tracking-wider text-[#1a1a1a]/70 font-bold mb-1">
+                            Designation / Extra Title
+                          </label>
+                          <input
+                            type="text"
+                            value={facultyEditForm.designation}
+                            onChange={e => setFacultyEditForm({ ...facultyEditForm, designation: e.target.value })}
+                            placeholder="e.g. Associate Professor / Lead Evaluator"
+                            className="w-full px-2.5 py-1.5 bg-white border border-[#1a1a1a] text-xs font-sans text-[#1a1a1a] outline-none focus:border-[#5e17eb]"
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-1">
+                          <button
+                            type="submit"
+                            className="flex-1 py-2 bg-[#5e17eb] hover:bg-[#4d10c7] text-white font-mono text-xs font-bold uppercase transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                          >
+                            <Save className="w-3.5 h-3.5" />
+                            <span>Save Details</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setFacultyEditMode(false)}
+                            className="px-3 py-2 bg-white hover:bg-[#1a1a1a] hover:text-white text-[#1a1a1a] border border-[#1a1a1a] font-mono text-xs font-bold uppercase transition cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                )}
+
                 <div className="border-[1.5px] border-[#1a1a1a] bg-white p-6 shadow-[4px_4px_0px_rgba(26,26,26,0.08)]">
                   <span className="font-mono text-[11px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-3">
                     Average Performance
@@ -842,12 +1111,11 @@ export default function App() {
                       onChange={e => setStudentForm({ ...studentForm, Department: e.target.value })}
                       className="w-full px-3 py-2 bg-[#f8f7f4] border-[1.5px] border-[#1a1a1a] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#5e17eb] font-sans text-xs"
                     >
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Information Technology">Information Technology</option>
-                      <option value="Mechanical Engineering">Mechanical Engineering</option>
-                      <option value="Electronics & Comm">Electronics & Comm</option>
-                      <option value="Civil Engineering">Civil Engineering</option>
-                      <option value="Electrical Engineering">Electrical Engineering</option>
+                      <option value="BCA-AI&DA">BCA-AI&DA</option>
+                      <option value="BCA-CY">BCA-CY</option>
+                      <option value="BCOM">BCOM</option>
+                      <option value="BBA">BBA</option>
+                      <option value="BSC">BSC</option>
                     </select>
                   </div>
 
@@ -892,7 +1160,7 @@ export default function App() {
                         type="button"
                         onClick={() => {
                           setIsEditingStudent(false);
-                          setStudentForm({ StudentID: "", Name: "", Department: "Computer Science", Semester: "4", Email: "" });
+                          setStudentForm({ StudentID: "", Name: "", Department: "BCA-AI&DA", Semester: "4", Email: "" });
                         }}
                         className="px-4 py-2.5 bg-white hover:bg-[#1a1a1a] hover:text-white border border-[#1a1a1a] font-mono text-xs uppercase font-bold text-[#1a1a1a] transition cursor-pointer"
                       >
@@ -2368,11 +2636,8 @@ export default function App() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-[1.5px] border-[#1a1a1a] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#5e17eb] font-bold bg-[#5e17eb]/10 px-2 py-0.5 rounded">
-                    Unit 09 &bull; AI Powered
-                  </span>
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1a1a1a]">
-                    Gemini Campus Communicator &amp; AI Advisor
+                    Campus Communicator &amp; AI Advisor
                   </h2>
                 </div>
                 <p className="font-mono text-xs text-[#1a1a1a]/60">
@@ -2408,7 +2673,7 @@ export default function App() {
           <button
             onClick={() => setFloatingChatOpen(true)}
             className="px-4 py-3 bg-[#5e17eb] hover:bg-[#4d10c7] text-white font-mono text-xs font-bold uppercase shadow-[4px_4px_0px_rgba(26,26,26,1)] border-[1.5px] border-[#1a1a1a] flex items-center gap-2.5 transition transform hover:-translate-y-0.5 cursor-pointer"
-            title="Open Gemini AI Campus Assistant & Communicator"
+            title="Open AI Campus Assistant & Communicator"
           >
             <Bot className="w-4 h-4 text-white" />
             <span>AI Communicator</span>
@@ -2719,7 +2984,7 @@ export default function App() {
               code: "09",
               label: "AI Communicator",
               category: "ai",
-              desc: "Gemini Chat & Advising",
+              desc: "AI Chat & Advising",
               icon: MessageSquareText,
               count: "AI",
             }

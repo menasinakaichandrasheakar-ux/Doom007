@@ -86,7 +86,7 @@ const PROMPT_SUGGESTIONS: { label: string; prompt: string; role: ChatRole; model
   },
   {
     label: "2-Week Remedial Study Schedule",
-    prompt: "Generate a structured, day-by-day 2-week remedial study schedule for a computer science student who failed the Internal Assessment in Data Structures (<40 marks).",
+    prompt: "Generate a structured, day-by-day 2-week remedial study schedule for a BCA-AI&DA student who failed the Internal Assessment in Data Structures (<40 marks).",
     role: "mentor",
     model: "gemini-3.1-pro-preview"
   },
@@ -127,7 +127,7 @@ export default function GeminiChatCommunicator({
       {
         id: "msg-init",
         role: "assistant",
-        text: `**Welcome to the Gemini Campus Communicator & AI Advisor.**\n\nI am connected to your live **Present Sir** database containing **${campusData.students.length} enrolled students**, attendance records, and risk assessments.\n\nHow can I assist you with student communications, official parent notices, counseling outreach, or remedial guidance today?`,
+        text: `**Welcome to the Campus Communicator & AI Advisor.**\n\nI am connected to your live **Present Sir** database containing **${campusData.students.length} enrolled students**, attendance records, and risk assessments.\n\nHow can I assist you with student communications, official parent notices, counseling outreach, or remedial guidance today?`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         model: "gemini-3.8-flash",
         roleType: "counselor"
@@ -311,9 +311,6 @@ Please formulate a specific intervention action plan and parent notification let
               <h3 className="font-serif font-display headline-texture text-base sm:text-lg font-bold text-[#1a1a1a] truncate leading-tight">
                 {currentRoleConfig.title}
               </h3>
-              <span className="hidden sm:inline-block px-1.5 py-0.5 font-mono text-[9px] uppercase font-bold bg-[#5e17eb] text-white">
-                Gemini 3 Powered
-              </span>
             </div>
             <p className="font-mono text-[10px] text-[#1a1a1a]/60 truncate">
               {currentRoleConfig.subtitle}
@@ -360,7 +357,7 @@ Please formulate a specific intervention action plan and parent notification let
       {/* Configuration Drawer */}
       {showConfig && (
         <div className="bg-[#f3f2ee] border-b-[1.5px] border-[#1a1a1a] p-3 sm:p-4 animate-in slide-in-from-top-2 duration-200">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
             {/* Role Preset */}
             <div>
               <label className="font-mono text-[10px] uppercase font-bold text-[#1a1a1a]/70 block mb-1">
@@ -375,23 +372,6 @@ Please formulate a specific intervention action plan and parent notification let
                 <option value="communicator">📢 Official Communications Officer</option>
                 <option value="mentor">💡 Peer Mentor & Course Tutor</option>
                 <option value="analyst">📊 Campus Risk & Data Analyst</option>
-              </select>
-            </div>
-
-            {/* Model Selector */}
-            <div>
-              <label className="font-mono text-[10px] uppercase font-bold text-[#1a1a1a]/70 block mb-1">
-                Gemini Model Engine
-              </label>
-              <select
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value as ModelOption)}
-                className="w-full text-xs font-mono bg-white border border-[#1a1a1a] p-1.5 focus:outline-none focus:ring-1 focus:ring-[#5e17eb]"
-              >
-                <option value="gemini-3.8-flash">⚡ gemini-3.8-flash (Recommended / Resilient)</option>
-                <option value="gemini-3.1-pro-preview">🧠 gemini-3.1-pro-preview (Deep Reasoning)</option>
-                <option value="gemini-3.1-flash-lite">🚀 gemini-3.1-flash-lite (Ultra Fast Notices)</option>
-                <option value="gemini-flash-latest">✨ gemini-flash-latest (Latest Flash)</option>
               </select>
             </div>
 
@@ -450,9 +430,6 @@ Please formulate a specific intervention action plan and parent notification let
               </option>
             ))}
           </select>
-          <span className="font-mono text-[10px] text-[#1a1a1a]/50">
-            Model: <strong className="text-[#1a1a1a]">{selectedModel}</strong>
-          </span>
         </div>
       </div>
 
@@ -467,21 +444,15 @@ Please formulate a specific intervention action plan and parent notification let
             >
               {/* Speaker Metadata */}
               <div className="flex items-center gap-2 font-mono text-[10px] text-[#1a1a1a]/60 mb-1 px-1">
-                <div className="flex items-center gap-1 font-bold">
-                  {isUser ? (
-                    <>
+                {isUser ? (
+                  <>
+                    <div className="flex items-center gap-1 font-bold">
                       <User className="w-3 h-3 text-[#1a1a1a]" />
                       <span>{currentProfile?.name || "You"}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Bot className="w-3 h-3 text-[#5e17eb]" />
-                      <span className="text-[#5e17eb]">{ROLE_INFO[roleType].badge}</span>
-                      {m.model && <span className="text-[9px] bg-[#1a1a1a]/10 px-1 py-0.2 rounded text-[#1a1a1a]">{m.model}</span>}
-                    </>
-                  )}
-                </div>
-                <span>&bull;</span>
+                    </div>
+                    <span>&bull;</span>
+                  </>
+                ) : null}
                 <span>{m.timestamp}</span>
               </div>
 
@@ -549,7 +520,7 @@ Please formulate a specific intervention action plan and parent notification let
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2 font-mono text-[10px] text-[#5e17eb] mb-1 px-1">
               <Sparkles className="w-3 h-3 animate-spin" />
-              <span>Gemini is generating response via {selectedModel}...</span>
+              <span>AI is generating response...</span>
             </div>
             <div className="p-3.5 bg-[#f8f7f4] border-[1.5px] border-[#1a1a1a] shadow-sm flex items-center gap-2 text-xs font-mono text-[#1a1a1a]/70">
               <span className="w-2 h-2 rounded-full bg-[#5e17eb] animate-ping" />
@@ -600,7 +571,7 @@ Please formulate a specific intervention action plan and parent notification let
             onClick={() => handleSendMessage()}
             disabled={!input.trim() || loading}
             className="h-[52px] px-4 sm:px-5 bg-[#5e17eb] hover:bg-[#4d10c7] disabled:bg-[#1a1a1a]/30 text-white font-mono text-xs font-bold uppercase transition flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shrink-0 border border-[#1a1a1a]"
-            title="Send prompt to Gemini"
+            title="Send prompt to AI Advisor"
           >
             <Send className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Send</span>
@@ -609,7 +580,6 @@ Please formulate a specific intervention action plan and parent notification let
 
         <div className="flex items-center justify-between font-mono text-[9px] text-[#1a1a1a]/50 mt-1.5 px-0.5">
           <span>Active Role: <strong className="text-[#1a1a1a]">{ROLE_INFO[roleType].title}</strong></span>
-          <span>Engine: <strong className="text-[#5e17eb]">{selectedModel}</strong> &bull; Multi-Turn History</span>
         </div>
       </div>
     </div>
